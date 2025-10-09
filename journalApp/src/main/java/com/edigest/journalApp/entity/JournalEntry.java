@@ -3,12 +3,12 @@ package com.edigest.journalApp.entity;
 
 import lombok.*;
 import org.bson.types.ObjectId;
-import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
-import java.util.Date;
+//import java.util.Date;
 
 @Document(collection = "journal_entries")
 //@Getter
