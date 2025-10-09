@@ -18,6 +18,7 @@ import java.util.Date;
 //@ToString
 //@EqualsAndHashCode
 @Data
+@NoArgsConstructor
 /*
     All of the above annotations are covered by @Data.
     This annotation is provided by lombok.
