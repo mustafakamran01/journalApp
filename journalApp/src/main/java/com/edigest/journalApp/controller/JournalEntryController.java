@@ -23,15 +23,15 @@ public class JournalEntryController {
     @GetMapping
     public ResponseEntity<?> getAll(){
         List<JournalEntry> journalEntry = journalEntryService.getAll();
-        if(journalEntry != null && !journalEntry.isEmpty()){
+        if (journalEntry != null && !journalEntry.isEmpty()){
             return new ResponseEntity<>(journalEntry, HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @PostMapping
-    public ResponseEntity<JournalEntry> createEntry(@RequestBody JournalEntry myEntry){
-        try{
+    public ResponseEntity<?> createEntry(@RequestBody JournalEntry myEntry){
+        try {
             myEntry.setDate(LocalDateTime.now());
             journalEntryService.saveEntry(myEntry);
             return new ResponseEntity<>(myEntry, HttpStatus.CREATED);
@@ -41,18 +41,17 @@ public class JournalEntryController {
     }
 
     @GetMapping("id/{myId}")
-    public ResponseEntity<JournalEntry> getJournalEntryById(@PathVariable ObjectId myId){
+    public ResponseEntity<?> getJournalEntryById(@PathVariable ObjectId myId){
         Optional<JournalEntry> journalEntry = journalEntryService.findById(myId);
-        if(journalEntry.isPresent()){
-            return new ResponseEntity<>(journalEntry.get(), HttpStatus.OK);
+        if (journalEntry.isPresent()){
+            return new ResponseEntity<>(journalEntry, HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
+
     @DeleteMapping("id/{myId}")
     public ResponseEntity<?> deleteJournalEntryById(@PathVariable ObjectId myId){
-//        journalEntryService.deleteById(myId);
-//        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         Optional<JournalEntry> journalEntry = journalEntryService.findById(myId);
         if (journalEntry.isPresent()){
             journalEntryService.deleteById((myId));
