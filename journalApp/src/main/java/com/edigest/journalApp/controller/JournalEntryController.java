@@ -73,28 +73,29 @@ public class JournalEntryController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-
-    @DeleteMapping("id/{myId}")
-    public ResponseEntity<?> deleteJournalEntryById(@PathVariable ObjectId myId){
+    @DeleteMapping("id/{userName}/{myId}")
+    public ResponseEntity<?> deleteJournalEntryById(@PathVariable ObjectId myId, @PathVariable String userName){
         Optional<JournalEntry> journalEntry = journalEntryService.findById(myId);
         if (journalEntry.isPresent()){
-            journalEntryService.deleteById((myId));
+            journalEntryService.deleteById(myId, userName);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @PutMapping("id/{myId}")
-    public ResponseEntity<?> updateJournalById(@PathVariable ObjectId myId, @RequestBody JournalEntry myEntry){
-//        JournalEntry old = journalEntryService.findById(myId).orElse(null);
-//        if(old != null){
-//            old.setTitle(myEntry.getTitle() != null && !myEntry.getTitle().isEmpty() ? myEntry.getTitle() : old.getTitle());
-//            old.setContent(myEntry.getContent() != null && !myEntry.getContent().isEmpty() ? myEntry.getContent() : old.getContent());
-//            journalEntryService.saveEntry(old);
-//            return new ResponseEntity<>(old, HttpStatus.OK);
-//        }
-
+    @PutMapping("id/{userName}/{myId}")
+    public ResponseEntity<?> updateJournalById(
+            @PathVariable ObjectId myId,
+            @RequestBody JournalEntry myEntry,
+            @PathVariable String userName
+    ){
+        JournalEntry old = journalEntryService.findById(myId).orElse(null);
+        if(old != null){
+            old.setTitle(myEntry.getTitle() != null && !myEntry.getTitle().isEmpty() ? myEntry.getTitle() : old.getTitle());
+            old.setContent(myEntry.getContent() != null && !myEntry.getContent().isEmpty() ? myEntry.getContent() : old.getContent());
+            journalEntryService.saveEntry(old);
+            return new ResponseEntity<>(old, HttpStatus.OK);
+        }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
     }
