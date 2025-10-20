@@ -18,8 +18,8 @@ public class UserController {
 
     @GetMapping
     public ResponseEntity<?> getAll(){
-        List<User> user= userService.getAll();
-        if (user != null && !user.isEmpty()){
+        List<User> user = userService.getAll();
+        if(user != null && !user.isEmpty()){
             return new ResponseEntity<>(user, HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -38,7 +38,7 @@ public class UserController {
     @PutMapping("/{userName}")
     public ResponseEntity<?> updateUser(@RequestBody User user, @PathVariable String userName){
         User userInDb = userService.findByUserName(userName);
-        if (userInDb != null){
+        if(userInDb != null){
             userInDb.setUserName(user.getUserName());
             userInDb.setPassword(user.getPassword());
             userService.saveEntry(userInDb);
