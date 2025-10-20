@@ -2,12 +2,14 @@ package com.edigest.journalApp.controller;
 
 import com.edigest.journalApp.entity.User;
 import com.edigest.journalApp.service.UserService;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/user")
@@ -20,6 +22,15 @@ public class UserController {
     public ResponseEntity<?> getAll(){
         List<User> user = userService.getAll();
         if(user != null && !user.isEmpty()){
+            return new ResponseEntity<>(user, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getUserById(@PathVariable ObjectId id){
+        Optional<User> user = userService.findById(id);
+        if (user.isPresent()){
             return new ResponseEntity<>(user, HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
