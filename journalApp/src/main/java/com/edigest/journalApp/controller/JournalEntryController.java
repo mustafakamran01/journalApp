@@ -74,7 +74,7 @@ public class JournalEntryController {
     }
 
     @DeleteMapping("id/{userName}/{myId}")
-    public ResponseEntity<?> deleteJournalEntryById(@PathVariable ObjectId myId, @PathVariable String userName){
+    public ResponseEntity<?> deleteJournalEntryById(@PathVariable ObjectId myId, @PathVariable String userName) {
         Optional<JournalEntry> journalEntry = journalEntryService.findById(myId);
         if (journalEntry.isPresent()){
             journalEntryService.deleteById(myId, userName);
