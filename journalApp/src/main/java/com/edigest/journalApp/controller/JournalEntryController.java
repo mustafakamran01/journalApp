@@ -56,19 +56,19 @@ public class JournalEntryController {
 //    }
 
     @PostMapping("/{userName}")
-    public ResponseEntity<?> createEntry(@RequestBody JournalEntry journalEntry, @PathVariable String userName){
+    public ResponseEntity<?> createEntry(@RequestBody JournalEntry journalEntry, @PathVariable String userName) {
         try {
             journalEntryService.saveEntry(journalEntry, userName);
             return new ResponseEntity<>(journalEntry, HttpStatus.CREATED);
-        } catch (Exception e){
+        } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
     @GetMapping("id/{myId}")
-    public ResponseEntity<?> getJournalEntryById(@PathVariable ObjectId myId){
+    public ResponseEntity<?> getJournalEntryById(@PathVariable ObjectId myId) {
         Optional<JournalEntry> journalEntry = journalEntryService.findById(myId);
-        if (journalEntry.isPresent()){
+        if (journalEntry.isPresent()) {
             return new ResponseEntity<>(journalEntry, HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -102,7 +102,7 @@ public class JournalEntryController {
     }
 
     /*
-    ResponseEntity<?> means we can give any class in it.
-    It is not restricted to any single class.
+        ResponseEntity<?> means we can give any class in it.
+        It is not restricted to any single class.
     */
 }
