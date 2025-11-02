@@ -21,21 +21,19 @@ public class JournalEntryService {
     @Autowired
     private UserService userService;
 
+
     @Transactional
-    public void saveEntry(JournalEntry journalEntry, String userName){
+    public void saveEntry(JournalEntry journalEntry, String userName) {
         try {
             journalEntry.setDate(LocalDateTime.now());
-            User user = userService.findByUserName(userName);
             JournalEntry saved = journalEntryRepository.save(journalEntry);
+            User user = userService.findByUserName(userName);
             user.getJournalEntries().add(saved);
             userService.saveEntry(user);
-        } catch (Exception e){
-            System.out.println(e);
+        } catch (Exception e) {
             throw new RuntimeException("An error occurred while saving the entry", e);
         }
     }
-
-
 
     public void saveEntry(JournalEntry journalEntry){
 
@@ -52,11 +50,15 @@ public class JournalEntryService {
         return journalEntryRepository.findById(id);
     }
 
+//    public void deleteById(ObjectId myId, String userName) {
+//        User user = userService.findByUserName(userName);
+//        user.getJournalEntries().removeIf(x -> x.getId().equals(myId));
+//        userService.saveEntry(user);
+//        journalEntryRepository.deleteById(myId);
+//
+//    }
+
     public void deleteById(ObjectId myId, String userName) {
-        User user = userService.findByUserName(userName);
-        user.getJournalEntries().removeIf(x -> x.getId().equals(myId));
-        userService.saveEntry(user);
-        journalEntryRepository.deleteById(myId);
 
     }
 
